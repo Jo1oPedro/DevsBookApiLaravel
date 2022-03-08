@@ -26,9 +26,9 @@ Route::post('/auth/refresh', [AuthController::class, 'refresh'])->name('refresh'
 Route::post('/user', [AuthController::class, 'create'])->name('create');
 Route::put('/user', [UserController::class, 'update'])->name('updatePut');
 Route::post('/user/avatar', [UserController::class, 'updateAvatar'])->name('updateAvatar');
-/*Route::post('/user/cover', [UserController::class, 'updateCover'])->name('updateCover');
+Route::post('/user/cover', [UserController::class, 'updateCover'])->name('updateCover');
 
-Route::get('/feed', [FeedController::class, 'read'])->name('feedRead');
+/*Route::get('/feed', [FeedController::class, 'read'])->name('feedRead');
 Route::get('/user/feed', [FeedController::class, 'userFeed'])->name('userFeed');
 Route::get('/user/{id}/feed', [FeedController::class, 'userFeed'])->name('userFeed');
 

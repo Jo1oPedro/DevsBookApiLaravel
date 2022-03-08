@@ -6,8 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Http\Requests\UpdateUserFormRequest;
 use App\Http\Requests\AvatarFormRequest;
+use App\Http\Requests\CoverFormRequest;
 use Illuminate\Support\Facades\Hash;
 use Image;
+use App\Services\CriadorDeImagem;
 
 class UserController extends Controller
 {
@@ -38,23 +40,29 @@ class UserController extends Controller
         return $array;
     }
 
-    public function updateAvatar(AvatarFormRequest $request)
+    public function updateAvatar(AvatarFormRequest $request, CriadorDeImagem $criadorDeImagem)
     {
-        $array = ['error' => ''];
+        $infos = [
+            'width' => '200',
+            'height' => '200',
+            'type' => 'avatar',
+            'loggedUser' => $this->loggedUser,
+            'request' => $request,
+            'public_path' => 'avatars',
+        ];
+        return $criadorDeImagem->criarImagem($infos);
+    }
 
-        $image = $request->file('avatar');
-
-        $filename = md5(time().rand(0,9999)).'.jpg';
-        $destPath = public_path('/media/avatars');
-            
-        $img = Image::make($image->path())
-                ->fit(200,200)
-                ->save($destPath.'/'.$filename);
-        $user = User::find($this->loggedUser['id']);
-        $user->avatar = $filename;
-        $user->save();
-        $array['url'] = url('/media/avatars/'.$filename);
-
-        return $array;
+    public function updateCover(CoverFormRequest $request, CriadorDeImagem $criadorDeImagem)
+    {
+        $infos = [
+            'width' => '850',
+            'height' => '310',
+            'type' => 'cover',
+            'loggedUser' => $this->loggedUser,
+            'request' => $request,
+            'public_path' => 'covers',
+        ];
+        return $criadorDeImagem->criarImagem($infos);
     }
 }
