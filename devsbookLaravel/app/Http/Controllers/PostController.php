@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\PostLike;
+use App\Models\PostComment;
 
 class PostController extends Controller
 {
@@ -50,6 +51,33 @@ class PostController extends Controller
             $array['likeCount'] = $likeCount;
         }
 
+
+        return $array;
+    }
+
+    public function comment(Request $request, $id)
+    {
+        $array = ['error' => ''];
+
+        $txt = $request->txt;
+
+        $postExists = Post::find($id);
+        if(!$postExists)
+        {
+            $array['error'] = 'Post não existe';
+            return $array;
+        }
+        if(!$txt)
+        {
+            $array['error'] = 'Mensagem não enviada';
+            return $array;
+        }
+        $newComment = new PostComment();
+        $newComment->id_post = $id;
+        $newComment->id_user = $this->loggedUser['id'];
+        $newComment->created_at = date('Y-m-d H:i:s');
+        $newComment->body = $txt;
+        $newComment->save();
 
         return $array;
     }
