@@ -107,4 +107,37 @@ class UserController extends Controller
         $array['data'] = $user;
         return $array;
     }
+
+    public function follow($id)
+    {
+        $array = ['error' => ''];
+
+        if($id == $this->loggedUser['id'])
+        {
+            $array['error'] = 'Você não pode seguir a si mesmo';
+            return $array;
+        }
+
+        //echo auth()->user()['id'];
+
+        $userExists = User::find($id);
+        if(!$userExists) {
+            $array['error'] = 'Usuário inexistente';
+            return $array;
+        }
+
+        $relation = UserRelation::where('users_from', $this->loggedUser['id'])
+                                ->where('users_to', $id)
+                                ->first();
+        if($relation) {
+            $relation->delete();
+        } else {
+            $newRelation = new UserRelation();
+            $newRelation->users_from = $this->loggedUser['id'];
+            $newRelation->users_to = $id;
+            $newRelation->save();
+        }
+
+        return $array;
+    }
 }
