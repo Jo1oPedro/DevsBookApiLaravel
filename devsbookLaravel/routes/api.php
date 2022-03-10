@@ -29,11 +29,12 @@ Route::post('/user/avatar', [UserController::class, 'updateAvatar'])->name('upda
 Route::post('/user/cover', [UserController::class, 'updateCover'])->name('updateCover');
 
 Route::get('/feed', [FeedController::class, 'read'])->name('feedRead');
+Route::get('/user/photos', [FeedController::class, 'userPhotos'])->name('userPhoto');
 Route::get('/user/feed', [FeedController::class, 'userFeed'])->name('userFeed');
 Route::get('/user/{id}/feed', [FeedController::class, 'userFeed'])->name('userFeedId');
 Route::post('/user/{id}/follow', [UserController::class, 'follow'])->name('follow');
 Route::get('/user/{id}/followers', [UserController::class, 'followers'])->name('followers');
-Route::get('/user/{id}/photos', [UserController::class, 'photos'])->name('photos');
+Route::get('/user/{id}/photos', [FeedController::class, 'userPhotos'])->name('usersPhotos');
 
 Route::get('/user', [UserController::class, 'read'])->name('userInformation');
 Route::get('/user/{id}', [UserController::class, 'read'])->name('userInformationId');
