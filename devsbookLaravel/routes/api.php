@@ -31,6 +31,9 @@ Route::post('/user/cover', [UserController::class, 'updateCover'])->name('update
 Route::get('/feed', [FeedController::class, 'read'])->name('feedRead');
 Route::get('/user/feed', [FeedController::class, 'userFeed'])->name('userFeed');
 Route::get('/user/{id}/feed', [FeedController::class, 'userFeed'])->name('userFeedId');
+Route::post('/user/{id}/follow', [UserController::class, 'follow'])->name('follow');
+Route::get('/user/{id}/followers', [UserController::class, 'followers'])->name('followers');
+Route::get('/user/{id}/photos', [UserController::class, 'photos'])->name('photos');
 
 Route::get('/user', [UserController::class, 'read'])->name('userInformation');
 Route::get('/user/{id}', [UserController::class, 'read'])->name('userInformationId');
@@ -39,8 +42,9 @@ Route::post('/feed', [FeedController::class, 'create'])->name('createFeed');
 
 Route::post('/post/{id}/like', [PostController::class, 'like'])->name('like');
 Route::post('/post/{id}/comment', [PostController::class, 'comment'])->name('comment');
-/*
+
 Route::get('/search', [SearchController::class, 'search'])->name('search');
+
 
 /*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
