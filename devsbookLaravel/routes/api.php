@@ -36,10 +36,10 @@ Route::get('/user', [UserController::class, 'read'])->name('userInformation');
 Route::get('/user/{id}', [UserController::class, 'read'])->name('userInformationId');
 
 Route::post('/feed', [FeedController::class, 'create'])->name('createFeed');
-/*
+
 Route::post('/post/{id}/like', [PostController::class, 'like'])->name('like');
 Route::post('/post/{id}/comment', [PostController::class, 'comment'])->name('comment');
-
+/*
 Route::get('/search', [SearchController::class, 'search'])->name('search');
 
 /*Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

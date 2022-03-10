@@ -11,4 +11,5 @@ class PostLike extends Model
 
     public $timestamps = false;
     protected $table = 'postlikes';
+    protected $fillable = ['id_post', 'id_user', 'created_at'];
 }
