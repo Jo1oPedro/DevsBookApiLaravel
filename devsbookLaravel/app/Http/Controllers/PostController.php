@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\PostLike;
 use App\Models\PostComment;
+use App\Http\Requests\CommentFormRequest;
 
 class PostController extends Controller
 {
@@ -55,7 +56,7 @@ class PostController extends Controller
         return $array;
     }
 
-    public function comment(Request $request, $id)
+    public function comment(CommentFormRequest $request, $id)
     {
         $array = ['error' => ''];
 
@@ -65,11 +66,6 @@ class PostController extends Controller
         if(!$postExists)
         {
             $array['error'] = 'Post não existe';
-            return $array;
-        }
-        if(!$txt)
-        {
-            $array['error'] = 'Mensagem não enviada';
             return $array;
         }
         $newComment = new PostComment();
